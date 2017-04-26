@@ -1,12 +1,9 @@
 server:
   port: 8010
 
-mysql:
-  url: 192.168.99.100:3306
-
 spring:
   datasource:
-    url: jdbc:mysql://${mysql.url}/todo_service?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://mysql-svc:3306/todolist?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: test
     password: test
     driver-class-name: com.mysql.jdbc.Driver

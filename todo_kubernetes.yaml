@@ -1,2 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 8010
+    targetPort: 8010
+    protocol: TCP
+  selector:
+    app: label-app
+---
 kind: Deployment
 apiVersion: extensions/v1beta1
+metadata:
+  name: deploy-todo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todo-service
+    spec:
+      containers:
+        - name: container-name
+          image: kimtaesoo/todoservice:1.1
+          ports:
+          - containerPort: 8010
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-volume
+#          env:
+#            - name: SPRING_PROFILES_ACTIVE
+#              value: kube
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
